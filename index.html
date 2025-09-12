@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Bestie! 🎉</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Inter:wght@300;400;500;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .card-container {
+            position: relative;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .greeting-card {
+            background: linear-gradient(135deg, #ff6b6b, #ffa726, #ffeb3b);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .greeting-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+        }
+
+        .card-front {
+            padding: 60px 40px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            background: inherit;
+        }
+
+        .card-front::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { transform: scale(1) rotate(0deg); opacity: 0; }
+            50% { transform: scale(1.1) rotate(180deg); opacity: 1; }
+        }
+
+        .front-content {
+            position: relative;
+            z-index: 3;
+        }
+
+        .card-front h1 {
+            font-family: 'Pacifico', cursive;
+            font-size: 2.8rem;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            margin-bottom: 20px;
+        }
+
+        .emoji-decoration {
+            font-size: 3.5rem;
+            margin: 30px 0;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-15px); }
+            60% { transform: translateY(-8px); }
+        }
+
+        .open-btn {
+            background: rgba(255, 255, 255, 0.95);
+            color: #333;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .open-btn:hover {
+            transform: scale(1.05);
+            background: white;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        .card-message {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 40px 30px;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 1;
+            border-radius: 20px;
+            overflow-y: auto;
+        }
+
+        .card-message.show {
+            opacity: 1;
+            transform: translateY(0);
+            z-index: 4;
+        }
+
+        .message-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .message-header h2 {
+            font-family: 'Pacifico', cursive;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 0.3s forwards;
+        }
+
+        .birthday-message {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: 30px;
+            text-align: left;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 0.6s forwards;
+        }
+
+        .signature {
+            font-family: 'Pacifico', cursive;
+            font-size: 1.2rem;
+            color: #ffeb3b;
+            text-align: center;
+            opacity: 0;
+            animation: fadeInUp 1s ease-out 0.9s forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            opacity: 0;
+            animation: fadeInScale 0.5s ease-out 1.2s forwards;
+        }
+
+        .close-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        @keyframes fadeInScale {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #ff6b6b;
+            top: -10px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .confetti:nth-child(2n) { background: #ffa726; width: 8px; height: 8px; }
+        .confetti:nth-child(3n) { background: #ffeb3b; width: 6px; height: 6px; }
+        .confetti:nth-child(4n) { background: #4caf50; }
+        .confetti:nth-child(5n) { background: #2196f3; width: 8px; height: 8px; }
+
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .card-container {
+                max-width: 320px;
+            }
+            
+            .card-front h1 {
+                font-size: 2.2rem;
+            }
+            
+            .emoji-decoration {
+                font-size: 2.8rem;
+            }
+            
+            .message-header h2 {
+                font-size: 1.8rem;
+            }
+            
+            .birthday-message {
+                font-size: 0.95rem;
+            }
+            
+            .card-front {
+                padding: 40px 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="card-container">
+        <div class="greeting-card">
+            <div class="card-front">
+                <div class="front-content">
+                    <h1>Happy Birthday</h1>
+                    <div class="emoji-decoration">🎂🎉🎈</div>
+                    <button class="open-btn" onclick="openCard()">Open Special Message ✨</button>
+                </div>
+            </div>
+            
+            <div class="card-message" id="cardMessage">
+                <button class="close-btn" onclick="closeCard()">×</button>
+                <div class="message-header">
+                    <h2>To My Amazing Bestie! 💕</h2>
+                </div>
+                <div class="birthday-message">
+                    Happy birthday, my dearest friend. I truly can't imagine my life without you — you've been my sounding board, my cheerleader, and my reality check all at once. 💝<br><br>
+                    
+                    Thank you for being steady when I'm uncertain, for the late-night talks, for pushing me to be better, and for celebrating the small wins. Your guidance has shaped so many of my choices, and your support has carried me through tough times. 🌟<br><br>
+                    
+                    I'm endlessly grateful for you and excited for all the adventures still ahead. Don't forget me. Will miss you on your special day. 💕<br><br>
+                    
+                    Once again Happy Birthday! Wishing you a year full of joy, growth, and unforgettable moments. 🎉
+                </div>
+                <div class="signature">
+                    With love and best wishes,<br>
+                    Your Best Friend Forever! 💝
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let isOpen = false;
+
+        function createConfetti() {
+            const colors = ['#ff6b6b', '#ffa726', '#ffeb3b', '#4caf50', '#2196f3'];
+            
+            for (let i = 0; i < 60; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDelay = Math.random() * 3 + 's';
+                confetti.style.animationDuration = (Math.random() * 2 + 3) + 's';
+                confetti.style.animation = `confetti-fall ${Math.random() * 2 + 3}s linear infinite`;
+                
+                document.body.appendChild(confetti);
+                
+                setTimeout(() => {
+                    if (confetti.parentNode) {
+                        confetti.parentNode.removeChild(confetti);
+                    }
+                }, 6000);
+            }
+        }
+
+        function openCard() {
+            if (!isOpen) {
+                const messageDiv = document.getElementById('cardMessage');
+                messageDiv.classList.add('show');
+                isOpen = true;
+                
+                // Create confetti after a short delay
+                setTimeout(() => {
+                    createConfetti();
+                }, 300);
+                
+                // More confetti bursts
+                setTimeout(() => createConfetti(), 1000);
+                setTimeout(() => createConfetti(), 2500);
+            }
+        }
+
+        function closeCard() {
+            const messageDiv = document.getElementById('cardMessage');
+            messageDiv.classList.remove('show');
+            isOpen = false;
+        }
+
+        // Keyboard support
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                if (!isOpen) {
+                    openCard();
+                }
+            } else if (e.key === 'Escape') {
+                closeCard();
+            }
+        });
+    </script>
+</body>
+</html>
