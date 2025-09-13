@@ -3,359 +3,767 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday Bestie! 🎉</title>
+    <title>AI Developer Portfolio</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Inter:wght@300;400;500;600&display=swap');
-        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --accent-color: #f093fb;
+            --dark-bg: #0f0f23;
+            --card-bg: #1a1a2e;
+            --text-light: #ffffff;
+            --text-muted: #a0a0a0;
+            --gradient: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+        }
+
         body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-light);
+            background: var(--dark-bg);
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 15, 35, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        /* Hero Section */
+        .hero {
             min-height: 100vh;
             display: flex;
-            justify-content: center;
             align-items: center;
-            padding: 20px;
-        }
-
-        .card-container {
+            justify-content: center;
+            background: linear-gradient(135deg, var(--dark-bg) 0%, #16213e  100%);
             position: relative;
-            max-width: 400px;
-            width: 100%;
-        }
-
-        .greeting-card {
-            background: linear-gradient(135deg, #ff6b6b, #ffa726, #ffeb3b);
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
             overflow: hidden;
-            position: relative;
-            transition: all 0.3s ease;
         }
 
-        .greeting-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
-        }
-
-        .card-front {
-            padding: 60px 40px;
-            text-align: center;
-            position: relative;
-            z-index: 2;
-            background: inherit;
-        }
-
-        .card-front::before {
+        .hero::before {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
-            animation: shimmer 3s ease-in-out infinite;
+            background: radial-gradient(circle, rgba(102, 126, 234, 0.1) 0%, transparent 70%);
+            animation: float 20s ease-in-out infinite;
         }
 
-        @keyframes shimmer {
-            0%, 100% { transform: scale(1) rotate(0deg); opacity: 0; }
-            50% { transform: scale(1.1) rotate(180deg); opacity: 1; }
+        @keyframes float {
+            0%, 100% { transform: translate(-50%, -50%) rotate(0deg); }
+            50% { transform: translate(-50%, -50%) rotate(180deg); }
         }
 
-        .front-content {
+        .hero-content {
+            text-align: center;
+            max-width: 800px;
+            padding: 0 2rem;
             position: relative;
-            z-index: 3;
+            z-index: 2;
         }
 
-        .card-front h1 {
-            font-family: 'Pacifico', cursive;
-            font-size: 2.8rem;
-            color: white;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-            margin-bottom: 20px;
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 1rem;
+            opacity: 0;
+            animation: slideUp 1s ease forwards 0.5s;
         }
 
-        .emoji-decoration {
-            font-size: 3.5rem;
-            margin: 30px 0;
-            animation: bounce 2s ease-in-out infinite;
+        .hero .subtitle {
+            font-size: clamp(1.2rem, 3vw, 1.5rem);
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: slideUp 1s ease forwards 0.7s;
         }
 
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-15px); }
-            60% { transform: translateY(-8px); }
-        }
-
-        .open-btn {
-            background: rgba(255, 255, 255, 0.95);
-            color: #333;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 30px;
+        .hero .description {
             font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-            animation: pulse 2s ease-in-out infinite;
-        }
-
-        .open-btn:hover {
-            transform: scale(1.05);
-            background: white;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.02); }
-        }
-
-        .card-message {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
-            padding: 40px 30px;
+            line-height: 1.8;
+            margin-bottom: 2rem;
             opacity: 0;
-            transform: translateY(50px);
-            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            z-index: 1;
-            border-radius: 20px;
-            overflow-y: auto;
+            animation: slideUp 1s ease forwards 0.9s;
         }
 
-        .card-message.show {
-            opacity: 1;
-            transform: translateY(0);
-            z-index: 4;
-        }
-
-        .message-header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .message-header h2 {
-            font-family: 'Pacifico', cursive;
-            font-size: 2.2rem;
-            margin-bottom: 10px;
-            opacity: 0;
-            animation: fadeInUp 1s ease-out 0.3s forwards;
-        }
-
-        .birthday-message {
-            font-size: 1.05rem;
-            line-height: 1.7;
-            margin-bottom: 30px;
-            text-align: left;
-            opacity: 0;
-            animation: fadeInUp 1s ease-out 0.6s forwards;
-        }
-
-        .signature {
-            font-family: 'Pacifico', cursive;
-            font-size: 1.2rem;
-            color: #ffeb3b;
-            text-align: center;
-            opacity: 0;
-            animation: fadeInUp 1s ease-out 0.9s forwards;
-        }
-
-        @keyframes fadeInUp {
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
 
-        .close-btn {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
+        .cta-button {
+            display: inline-block;
+            background: var(--gradient);
             color: white;
-            border-radius: 50%;
-            width: 45px;
-            height: 45px;
-            cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.5rem;
+            padding: 1rem 2rem;
+            text-decoration: none;
+            border-radius: 50px;
             font-weight: bold;
-            transition: all 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
             opacity: 0;
-            animation: fadeInScale 0.5s ease-out 1.2s forwards;
+            animation: slideUp 1s ease forwards 1.1s;
         }
 
-        .close-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: scale(1.1);
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
         }
 
-        @keyframes fadeInScale {
-            to {
-                opacity: 1;
-                transform: scale(1);
+        /* Section Styles */
+        section {
+            padding: 5rem 0;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-left: 2rem;
+            padding-right: 2rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .card:hover::before {
+            left: 100%;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Experience */
+        .experience-card h3 {
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .experience-card .company {
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .experience-card .duration {
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .experience-card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .experience-card li {
+            margin-bottom: 0.8rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .experience-card li::before {
+            content: '▶';
+            position: absolute;
+            left: 0;
+            color: var(--accent-color);
+        }
+
+        /* Projects Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 3px;
+            background: var(--gradient);
+            transition: left 0.3s ease;
+        }
+
+        .project-card:hover::before {
+            left: 0;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .project-card h3 {
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+        }
+
+        /* Skills Grid */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-category h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .skill-tag {
+            background: rgba(102, 126, 234, 0.2);
+            color: var(--text-light);
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(102, 126, 234, 0.3);
+        }
+
+        .skill-tag:hover {
+            background: rgba(102, 126, 234, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* Awards */
+        .awards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .award-card {
+            background: linear-gradient(135deg, rgba(240, 147, 251, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            border: 1px solid rgba(240, 147, 251, 0.3);
+        }
+
+        .award-card h3 {
+            color: var(--accent-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .award-card .position {
+            color: var(--primary-color);
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        /* Contact Form */
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-light);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: var(--text-light);
+            font-size: 1rem;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+        }
+
+        /* Personal Info */
+        .personal-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .info-item {
+            text-align: center;
+            padding: 1.5rem;
+            background: var(--card-bg);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .info-item h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .info-item .placeholder {
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            section {
+                padding: 3rem 1rem;
+            }
+            
+            .hero-content {
+                padding: 0 1rem;
+            }
+            
+            .projects-grid,
+            .skills-grid,
+            .awards-grid {
+                grid-template-columns: 1fr;
             }
         }
 
-        .confetti {
-            position: fixed;
-            width: 10px;
-            height: 10px;
-            background: #ff6b6b;
-            top: -10px;
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 1000;
+        /* Scroll Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
         }
 
-        .confetti:nth-child(2n) { background: #ffa726; width: 8px; height: 8px; }
-        .confetti:nth-child(3n) { background: #ffeb3b; width: 6px; height: 6px; }
-        .confetti:nth-child(4n) { background: #4caf50; }
-        .confetti:nth-child(5n) { background: #2196f3; width: 8px; height: 8px; }
-
-        @keyframes confetti-fall {
-            0% {
-                transform: translateY(-100vh) rotate(0deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(100vh) rotate(720deg);
-                opacity: 0;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .card-container {
-                max-width: 320px;
-            }
-            
-            .card-front h1 {
-                font-size: 2.2rem;
-            }
-            
-            .emoji-decoration {
-                font-size: 2.8rem;
-            }
-            
-            .message-header h2 {
-                font-size: 1.8rem;
-            }
-            
-            .birthday-message {
-                font-size: 0.95rem;
-            }
-            
-            .card-front {
-                padding: 40px 30px;
-            }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
 <body>
-    <div class="card-container">
-        <div class="greeting-card">
-            <div class="card-front">
-                <div class="front-content">
-                    <h1>Happy Birthday</h1>
-                    <div class="emoji-decoration">🎂🎉🎈</div>
-                    <button class="open-btn" onclick="openCard()">Open Special Message ✨</button>
+    <nav class="nav">
+        <div class="nav-content">
+            <div class="logo">AI Developer</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#awards">Awards</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>B R SUSHAMEENDRA RAO</h1>
+            <p class="subtitle">Digital Specialist Engineer</p>
+            <p class="description">Software developer with 2.8+ years of experience in Python and Java. Skilled in developing Gen AI and Agentic AI applications using AI frameworks, Azure AI, prompt engineering, and databases while following Responsible AI principles.</p>
+            <a href="#contact" class="cta-button">Get In Touch</a>
+        </div>
+    </section>
+
+    <section id="about">
+        <h2 class="section-title fade-in">Personal Information</h2>
+        <div class="personal-info">
+            <div class="info-item fade-in">
+                <h3>Email</h3>
+                <p class="placeholder">brsushameendrarao@gmail.com</p>
+            </div>
+            <div class="info-item fade-in">
+                <h3>Phone</h3>
+                <p class="placeholder">+91-6301305791</p>
+            </div>
+            <div class="info-item fade-in">
+                <h3>Location</h3>
+                <p class="placeholder">Hyderabad</p>
+            </div>
+            <div class="info-item fade-in">
+                <h3>LinkedIn</h3>
+                <p class="placeholder">www.linkedin.com/in/b-r-sushameendra-rao-3a2137214</p>
+            </div>
+        </div>
+        
+        <div class="card fade-in">
+            <h3>Education</h3>
+            <p><strong>Bachelor of Technology (B.Tech.) in Electronics and Communication Engineering</strong></p>
+            <p>Teegala Krishna Reddy Engineering College, Hyderabad, India</p>
+            <p>CGPA: 8.05 | Duration: 2018 – 2022</p>
+        </div>
+
+        <div class="card fade-in">
+            <h3>Certifications</h3>
+            <ul style="list-style: none; padding-left: 0;">
+                <li style="margin-bottom: 0.5rem;">• Infosys Certified Generative AI Professional – Intermediate</li>
+                <li style="margin-bottom: 0.5rem;">• Infosys Certified Python Programmer</li>
+                <li style="margin-bottom: 0.5rem;">• Infosys certified Professional - Generative AI for All</li>
+                <li style="margin-bottom: 0.5rem;">• Courses on Gen-AI, Prompt engineering, AI modules, AI guardrails</li>
+            </ul>
+        </div>
+    </section>
+
+    <section id="experience">
+        <h2 class="section-title fade-in">Experience</h2>
+        <div class="experience-card card fade-in">
+            <h3>Digital Specialist Engineer</h3>
+            <p class="company">Infosys Limited</p>
+            <p class="duration">November 2022 – Present</p>
+            <ul>
+                <li>AI-Powered Document Intelligence – Developed multi-modal document processing systems, classifying text, tables, and images for structured retrieval.</li>
+                <li>Proposal Automation & Summarization – Built AI-driven solutions for response drafting, risk analysis, and document classification to streamline proposal management.</li>
+                <li>Advanced Retrieval Techniques – Implemented hierarchical indexing, context enrichment, and Graph-based RAG to enhance search accuracy.</li>
+                <li>Agentic Systems – Built Agentic RAG workflows and a SQL Agentic chatbot to enable intelligent, context-aware interactions and query handling.</li>
+                <li>Cloud-Based AI Deployment – Deployed document intelligence and retrieval services in a scalable cloud environment.</li>
+                <li>AI Research & Innovation – Explored Agentic RAG, workflow automation, and hypothetical document embedding for intelligent response generation.</li>
+                <li>Evaluation Frameworks – Designed and implemented evaluation pipelines using DeepEval and RAGAS, supporting both ground-truth-based and ground-truth-less assessments using model outputs.</li>
+                <li>Cross-Functional Collaboration – Worked with multiple teams to integrate AI-driven insights into enterprise applications.</li>
+            </ul>
+        </div>
+    </section>
+
+    <section id="projects">
+        <h2 class="section-title fade-in">Projects</h2>
+        <div class="projects-grid">
+            <div class="project-card fade-in">
+                <h3>Training & Foundation</h3>
+                <p>Trained in Java, Python, Oracle SQL, MongoDB, MySQL, HTML, and CSS. Completed a capstone project developing a web-based application using Flask, Python, and MySQL.</p>
+            </div>
+            
+            <div class="project-card fade-in">
+                <h3>Document Intelligence Platform</h3>
+                <p>Developed an AI-powered document query system to extract insights from unstructured data. Designed a multi-modal processing pipeline, classifying text, tables, and images. Enhanced retrieval accuracy using advanced search and indexing techniques.</p>
+            </div>
+            
+            <div class="project-card fade-in">
+                <h3>Document Analyzer</h3>
+                <p>Developed an AI-driven document analysis tool to generate summaries, FAQs, and FAQ-based responses. Implemented a document quality index that evaluates content relevance based on FAQ responses.</p>
+            </div>
+            
+            <div class="project-card fade-in">
+                <h3>Proposal Automation Tool</h3>
+                <p>Built an AI-driven proposal assistant for summarization, response drafting, and risk analysis. Implemented a classification system for efficient proposal categorization. Integrated past response documents and chatbot assistance for automated responses.</p>
+            </div>
+            
+            <div class="project-card fade-in">
+                <h3>Advanced AI Research Enhancements</h3>
+                <p>Developed defence mechanisms against prompt hacking for security. Implemented data fingerprinting to prevent reuploading of duplicate chunks in the vector database. Built a Graph-based RAG model for structured document search and knowledge retrieval.</p>
+            </div>
+            
+            <div class="project-card fade-in">
+                <h3>Agentic Chatbot Development</h3>
+                <p>Built an Agentic RAG chatbot and a SQL Agent chatbot using LangGraph and CrewAI, enabling dynamic multi-agent collaboration and intelligent task handling.</p>
+            </div>
+            
+            <div class="project-card fade-in">
+                <h3>Evaluation-as-a-Service Platform</h3>
+                <p>Built a flexible evaluation tool to check the quality of LLM responses using DeepEval and RAGAS, even when no ground truth is available. The platform offers flexible API access and plugin support for various LLM providers.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills">
+        <h2 class="section-title fade-in">Skills</h2>
+        <div class="skills-grid">
+            <div class="card skill-category fade-in">
+                <h3>Technical Skills</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">Python</span>
+                    <span class="skill-tag">Java</span>
+                    <span class="skill-tag">SQL</span>
+                    <span class="skill-tag">GenAI</span>
+                    <span class="skill-tag">Prompt Engineering</span>
+                    <span class="skill-tag">Langchain</span>
+                    <span class="skill-tag">HuggingFace</span>
+                    <span class="skill-tag">Evaluation Frameworks</span>
                 </div>
             </div>
             
-            <div class="card-message" id="cardMessage">
-                <button class="close-btn" onclick="closeCard()">×</button>
-                <div class="message-header">
-                    <h2>To My Amazing Bestie! 💕</h2>
+            <div class="card skill-category fade-in">
+                <h3>Databases</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">MySQL</span>
+                    <span class="skill-tag">MongoDB</span>
+                    <span class="skill-tag">Weaviate</span>
+                    <span class="skill-tag">ChromaDB</span>
+                    <span class="skill-tag">FAISS</span>
+                    <span class="skill-tag">Neo4j</span>
                 </div>
-                <div class="birthday-message">
-                    Happy birthday, my dearest friend. I truly can't imagine my life without you — you've been my sounding board, my cheerleader, and my reality check all at once. 💝<br><br>
-                    
-                    Thank you for being steady when I'm uncertain, for the late-night talks, for pushing me to be better, and for celebrating the small wins. Your guidance has shaped so many of my choices, and your support has carried me through tough times. 🌟<br><br>
-                    
-                    I'm endlessly grateful for you and excited for all the adventures still ahead. Don't forget me. Will miss you on your special day. 💕<br><br>
-                    
-                    Once again Happy Birthday! Wishing you a year full of joy, growth, and unforgettable moments. 🎉
+            </div>
+            
+            <div class="card skill-category fade-in">
+                <h3>Cloud & AI Platforms</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">AWS Bedrock</span>
+                    <span class="skill-tag">GCP Vertex AI</span>
+                    <span class="skill-tag">Azure AI Studio</span>
+                    <span class="skill-tag">Azure OpenAI</span>
                 </div>
-                <div class="signature">
-                    With love and best wishes,<br>
-                    Your Best Friend Forever! 💝
+            </div>
+            
+            <div class="card skill-category fade-in">
+                <h3>Agentic Frameworks</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">Agno</span>
+                    <span class="skill-tag">Langgraph</span>
+                    <span class="skill-tag">CrewAI</span>
+                    <span class="skill-tag">SmolAgents</span>
+                </div>
+            </div>
+            
+            <div class="card skill-category fade-in">
+                <h3>Web Frameworks</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">FastAPI</span>
+                    <span class="skill-tag">Flask</span>
+                    <span class="skill-tag">Streamlit</span>
+                    <span class="skill-tag">Gradio</span>
+                </div>
+            </div>
+            
+            <div class="card skill-category fade-in">
+                <h3>Tools</h3>
+                <div class="skill-tags">
+                    <span class="skill-tag">Git</span>
+                    <span class="skill-tag">GitHub</span>
+                    <span class="skill-tag">Postman</span>
+                    <span class="skill-tag">Swagger</span>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
+
+    <section id="awards">
+        <h2 class="section-title fade-in">Awards & Achievements</h2>
+        
+        <div class="card fade-in" style="margin-bottom: 2rem;">
+            <h3>Awards & Recognitions</h3>
+            <ul style="list-style: none; padding-left: 0;">
+                <li style="margin-bottom: 1rem; padding-left: 1.5rem; position: relative;">
+                    <span style="position: absolute; left: 0; color: var(--accent-color);">🏆</span>
+                    <strong>Unit Rise Award</strong> - Acknowledged for outstanding performance and contributions as a new team member.
+                </li>
+                <li style="margin-bottom: 1rem; padding-left: 1.5rem; position: relative;">
+                    <span style="position: absolute; left: 0; color: var(--accent-color);">⚡</span>
+                    <strong>Rise Insta Award</strong> - Recognized for delivering high-impact results on critical tasks within tight deadlines, demonstrating agility and initiative.
+                </li>
+            </ul>
+        </div>
+        
+        <h3 style="color: var(--primary-color); margin-bottom: 2rem; text-align: center;">Hackathons & Competitions</h3>
+        <div class="awards-grid">
+            <div class="award-card card fade-in">
+                <h3>Convergence Surround 2024</h3>
+                <p class="position">🥇 1st Place</p>
+                <p>Built a GenAI UI using Semantic Search and advanced RAG to help CSRs retrieve accurate, summarized healthcare info.</p>
+            </div>
+            
+            <div class="award-card card fade-in">
+                <h3>Gemini Hackathon</h3>
+                <p class="position">🥉 3rd Place</p>
+                <p>Implemented data fingerprinting and advanced RAG (query expansion, reranking) with input guardrails for prompt security.</p>
+            </div>
+            
+            <div class="award-card card fade-in">
+                <h3>Redefine Migration Hackathon</h3>
+                <p class="position">🌟 Special Mention</p>
+                <p>Developed AI agents to visualize legacy app landscapes using GenAI and graph visualization.</p>
+            </div>
+            
+            <div class="award-card card fade-in">
+                <h3>Infosys Topaz Hackathon</h3>
+                <p class="position">🥉 3rd Place</p>
+                <p>Created an AI agent to scan, classify, and link insights across diverse data sources.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <h2 class="section-title fade-in">Get In Touch</h2>
+        <div class="contact-form fade-in">
+            <form>
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" rows="5" required></textarea>
+                </div>
+                <button type="submit" class="cta-button" style="width: 100%; text-align: center;">Send Message</button>
+            </form>
+        </div>
+    </section>
 
     <script>
-        let isOpen = false;
-
-        function createConfetti() {
-            const colors = ['#ff6b6b', '#ffa726', '#ffeb3b', '#4caf50', '#2196f3'];
-            
-            for (let i = 0; i < 60; i++) {
-                const confetti = document.createElement('div');
-                confetti.className = 'confetti';
-                confetti.style.left = Math.random() * 100 + '%';
-                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-                confetti.style.animationDelay = Math.random() * 3 + 's';
-                confetti.style.animationDuration = (Math.random() * 2 + 3) + 's';
-                confetti.style.animation = `confetti-fall ${Math.random() * 2 + 3}s linear infinite`;
-                
-                document.body.appendChild(confetti);
-                
-                setTimeout(() => {
-                    if (confetti.parentNode) {
-                        confetti.parentNode.removeChild(confetti);
-                    }
-                }, 6000);
-            }
-        }
-
-        function openCard() {
-            if (!isOpen) {
-                const messageDiv = document.getElementById('cardMessage');
-                messageDiv.classList.add('show');
-                isOpen = true;
-                
-                // Create confetti after a short delay
-                setTimeout(() => {
-                    createConfetti();
-                }, 300);
-                
-                // More confetti bursts
-                setTimeout(() => createConfetti(), 1000);
-                setTimeout(() => createConfetti(), 2500);
-            }
-        }
-
-        function closeCard() {
-            const messageDiv = document.getElementById('cardMessage');
-            messageDiv.classList.remove('show');
-            isOpen = false;
-        }
-
-        // Keyboard support
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter' || e.key === ' ') {
-                if (!isOpen) {
-                    openCard();
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
                 }
-            } else if (e.key === 'Escape') {
-                closeCard();
+            });
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all fade-in elements
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Navbar background on scroll
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('.nav');
+            if (window.scrollY > 100) {
+                nav.style.background = 'rgba(15, 15, 35, 0.98)';
+            } else {
+                nav.style.background = 'rgba(15, 15, 35, 0.95)';
             }
         });
+
+        // Form submission
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your message! I\'ll get back to you soon.');
+            this.reset();
+        });
+
+        // Add typing animation to hero subtitle
+        const subtitle = document.querySelector('.hero .subtitle');
+        const text = subtitle.textContent;
+        subtitle.textContent = '';
+        
+        setTimeout(() => {
+            let i = 0;
+            const typeWriter = () => {
+                if (i < text.length) {
+                    subtitle.textContent += text.charAt(i);
+                    i++;
+                    setTimeout(typeWriter, 50);
+                }
+            };
+            typeWriter();
+        }, 1500);
     </script>
 </body>
 </html>
