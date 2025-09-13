@@ -719,10 +719,30 @@
         <h2 class="section-title fade-in">Get In Touch</h2>
         <div class="card fade-in" style="max-width: 600px; margin: 0 auto; text-align: center;">
             <h3>Contact Details</h3>
-            <p><strong>Email:</strong> <a href="mailto:brsushameendrarao@gmail.com" style="color: var(--accent-color);">brsushameendrarao@gmail.com</a></p>
-            <p><strong>Phone:</strong> <a href="tel:+916301305791" style="color: var(--accent-color);">+91-6301305791</a></p>
-            <p><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/b-r-sushameendra-rao-3a2137214" target="_blank" style="color: var(--accent-color);">b-r-sushameendra-rao-3a2137214</a></p>
+            <p>
+                <strong>Email:</strong> 
+                <a href="#" onclick="window.open('https://mail.google.com/mail/?view=cm&fs=1&to=brsushameendrarao@gmail.com','_blank'); return false;" style="color: var(--accent-color);">brsushameendrarao@gmail.com</a>
+                <span class="copy-icon" data-copy="brsushameendrarao@gmail.com" title="Copy Email" style="cursor:pointer; margin-left:8px; vertical-align:middle;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><rect x="3" y="3" width="13" height="13" rx="2" ry="2"></rect></svg>
+                </span>
+            </p>
+            <p>
+                <strong>Phone:</strong> 
+                <a href="tel:+916301305791" style="color: var(--accent-color);">+91-6301305791</a>
+                <span class="copy-icon" data-copy="+91-6301305791" title="Copy Phone" style="cursor:pointer; margin-left:8px; vertical-align:middle;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92V19a2 2 0 0 1-2.18 2A19.86 19.86 0 0 1 3 5.18 2 2 0 0 1 5 3h2.09a2 2 0 0 1 2 1.72c.13.81.36 1.6.68 2.34a2 2 0 0 1-.45 2.11l-1.27 1.27a16 16 0 0 0 6.29 6.29l1.27-1.27a2 2 0 0 1 2.11-.45c.74.32 1.53.55 2.34.68A2 2 0 0 1 22 16.92z"></path></svg>
+                </span>
+            </p>
+            <p>
+                <strong>LinkedIn:</strong> 
+                <a href="https://www.linkedin.com/in/b-r-sushameendra-rao-3a2137214" target="_blank" style="color: var(--accent-color);">b-r-sushameendra-rao-3a2137214</a>
+                <span class="copy-icon" data-copy="https://www.linkedin.com/in/b-r-sushameendra-rao-3a2137214" title="Copy LinkedIn" style="cursor:pointer; margin-left:8px; vertical-align:middle;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent-color)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><line x1="16" y1="11" x2="16" y2="16"></line><line x1="12" y1="11" x2="12" y2="16"></line><line x1="8" y1="11" x2="8" y2="16"></line></svg>
+                </span>
+            </p>
             <p style="color: var(--text-muted); margin-top: 1rem;">Feel free to reach out via email, phone, or LinkedIn for any opportunities.</p>
+            <span id="copy-tooltip" style="display:none; position:fixed; background:var(--card-bg); color:var(--accent-color); padding:6px 12px; border-radius:6px; font-size:0.95rem; z-index:9999;">Copied!</span>
+        </div>
         </div>
     </section>
 
@@ -770,23 +790,22 @@
             }
         });
 
-        // Custom Netlify-compatible AJAX form submission
-        const handleSubmit = event => {
-            event.preventDefault();
-            const myForm = event.target;
-            const formData = new FormData(myForm);
-            fetch("/", {
-                method: "POST",
-                headers: { "Content-Type": "application/x-www-form-urlencoded" },
-                body: new URLSearchParams(formData).toString()
-            })
-                .then(() => {
-                    alert("Thank you for your message! I'll get back to you soon.");
-                    myForm.reset();
-                })
-                .catch(error => alert(error));
-        };
-        document.querySelector("form").addEventListener("submit", handleSubmit);
+
+        // Copy to clipboard logic for contact icons
+        document.querySelectorAll('.copy-icon').forEach(icon => {
+            icon.addEventListener('click', function(e) {
+                const value = this.getAttribute('data-copy');
+                navigator.clipboard.writeText(value);
+                // Show tooltip
+                const tooltip = document.getElementById('copy-tooltip');
+                tooltip.textContent = 'Copied!';
+                tooltip.style.display = 'block';
+                // Position tooltip near mouse
+                tooltip.style.left = (e.pageX + 10) + 'px';
+                tooltip.style.top = (e.pageY - 10) + 'px';
+                setTimeout(() => { tooltip.style.display = 'none'; }, 1200);
+            });
+        });
 
         // Add typing animation to hero subtitle
         const subtitle = document.querySelector('.hero .subtitle');
